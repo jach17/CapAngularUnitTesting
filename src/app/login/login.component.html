@@ -1,0 +1,23 @@
+<div class="login-form" *ngIf="formLogin" [formGroup]="formLogin">
+  <mat-form-field>
+    <mat-label>Usuario</mat-label>
+    <input matInput placeholder="Ingresa tu usuario" formControlName="email" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Contraseña</mat-label>
+    <input
+      matInput
+      placeholder="Ingresa tu contraseña"
+      type="password"
+      formControlName="password"
+    />
+  </mat-form-field>
+  <button
+    mat-stroked-button
+    color="primary"
+    [disabled]="formLogin.invalid || isLoading"
+    (click)="loginClick()"
+  >
+    Ingresar
+  </button>
+</div>
