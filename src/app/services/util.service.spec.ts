@@ -26,11 +26,12 @@ describe('UtilService', () => {
     service.saveToken('token-example');
     expect(localStorage.setItem).toHaveBeenCalledWith('TOKEN', 'token-example');
   });
+
   it('should get token from localstoreage', () => {
     service.getToken();
-
     expect(localStorage.getItem).toHaveBeenCalledWith('TOKEN');
   });
+
   it('should remove token from localstoreage', () => {
     service.isLogged.subscribe({
       next: (data) => {

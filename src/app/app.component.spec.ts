@@ -14,13 +14,13 @@ import { Router } from '@angular/router';
 class MockLoginComponent {}
 
 fdescribe('AppComponent', () => {
-  let router: Router;
   let serviceSpy = jasmine.createSpyObj<UtilService>('UtilService', [
     'getToken',
     'deleteToken',
     'isLogged',
   ]);
 
+  let routerSpy = jasmine.createSpyObj<Router>('Router', ['navigate']);
   serviceSpy.isLogged = new Subject<boolean>();
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -38,6 +38,10 @@ fdescribe('AppComponent', () => {
         {
           provide: UtilService,
           useValue: serviceSpy,
+        },
+        {
+          provide: Router,
+          useValue: routerSpy,
         },
       ],
     }).compileComponents();
@@ -87,5 +91,6 @@ fdescribe('AppComponent', () => {
     const app = fixture.componentInstance;
     app.logout();
     expect(serviceSpy.deleteToken).toHaveBeenCalled();
+    expect(routerSpy.navigate).toHaveBeenCalledWith(['login']);
   });
 });
