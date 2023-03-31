@@ -26,27 +26,21 @@ export class EditComputerComponent {
     this.route.params.subscribe({
       next: (params) => {
         this.computerId = params['id'];
-        service.getComputerByid(Number(this.computerId)).subscribe({
-          next: (computer: Computer) => {
-            this.formComputerEdit?.setValue({
-              brand: computer.brand,
-              model: computer.model,
-            });
-          },
-          error: (err) => {
-            alert(
-              'Ocurrió un error al cargar la infromación de la caomputadora'
-            );
-          },
-        });
-        //Get by id
-        //create form to update
-        //form.patchValue(objectResponse)
-        //Consumr servicio de put
+        this.loadData();
       },
     });
   }
 
+  loadData() {
+    this.service.getComputerByid(Number(this.computerId)).subscribe({
+      next: (computer: Computer) => {
+        this.formComputerEdit?.patchValue(computer);
+      },
+      error: (err) => {
+        alert('Ocurrió un error al cargar la infromación de la caomputadora');
+      },
+    });
+  }
   updateComputer() {
     let dataToUpdate = this.formComputerEdit?.value;
     this.service.updateComputer(this.computerId, dataToUpdate).subscribe({

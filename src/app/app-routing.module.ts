@@ -22,6 +22,7 @@ const routes: Routes = [
   },
   {
     path: 'computers',
+    canActivate: [AuthService],
     loadChildren: () =>
       import('./computers/computers.module').then((m) => m.ComputersModule),
   },

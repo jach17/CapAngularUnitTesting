@@ -11,7 +11,7 @@ export class AppComponent {
   title = 'angular-2023';
   isLogged = false;
   constructor(private router: Router, private util: UtilService) {
-    this.isLogged = Boolean(util.getToken());
+    this.isLogged = Boolean(this.util.getToken());
 
     console.log('Logged', this.isLogged);
     util.isLogged.subscribe({

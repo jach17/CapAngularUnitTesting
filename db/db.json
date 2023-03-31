@@ -9,18 +9,13 @@
   "computers": [
     {
       "brand": "Lenovo123",
-      "model": "T1SA",
+      "model": "T1SAaa",
       "id": 2
     },
     {
       "brand": "hpa",
       "model": "hi12k",
       "id": 3
-    },
-    {
-      "brand": "adsaa",
-      "model": "2323",
-      "id": 4
     }
   ]
 }
