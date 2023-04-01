@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 })
 class MockLoginComponent {}
 
-fdescribe('AppComponent', () => {
+describe('AppComponent', () => {
   let serviceSpy = jasmine.createSpyObj<UtilService>('UtilService', [
     'getToken',
     'deleteToken',

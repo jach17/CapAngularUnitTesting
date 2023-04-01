@@ -29,19 +29,14 @@ export class LoginComponent {
     const req: LoginRequest = this.formLogin?.value as LoginRequest;
     this.service.loginService(req).subscribe({
       next: (res) => {
-        console.log('REESPONSE', res);
         this.util.saveToken(res.token);
         this.router.navigate(['home']);
       },
       error: (err) => {
         this.isLoading = false;
-
-        console.log('ERROR', err);
       },
       complete: () => {
         this.isLoading = false;
-
-        console.log('COMPLETE');
       },
     });
     console.log('Request sent');
