@@ -13,13 +13,14 @@ describe('ComputersComponent', () => {
   let component: ComputersComponent;
   let fixture: ComponentFixture<ComputersComponent>;
 
-  let computerServiceSpy = jasmine.createSpyObj<ComputersService>(
-    'ComputerService',
-    ['getComputers', 'delteComputer']
-  );
+  let computerServiceSpy: jasmine.SpyObj<ComputersService>;
 
-  computerServiceSpy.getComputers.and.returnValue(of([]));
   beforeEach(async () => {
+    computerServiceSpy = jasmine.createSpyObj<ComputersService>(
+      'ComputerService',
+      ['getComputers', 'delteComputer']
+    );
+    computerServiceSpy.getComputers.and.returnValue(of([]));
     await TestBed.configureTestingModule({
       declarations: [ComputersComponent],
       imports: [
@@ -52,6 +53,7 @@ describe('ComputersComponent', () => {
     component.loadData();
     expect(component.computers.data.length).not.toEqual(0);
   });
+
   it('should load data - error', () => {
     computerServiceSpy.getComputers.and.returnValue(
       throwError(() => {
@@ -60,5 +62,42 @@ describe('ComputersComponent', () => {
     );
     component.loadData();
     expect(component.computers.data.length).toEqual(0);
+  });
+
+  it('should delete computer', () => {
+    let mockResponse = {
+      id: 1,
+      brand: 'HP',
+      model: '123D',
+    } as Computer;
+    computerServiceSpy.delteComputer.and.returnValue(of(mockResponse));
+    component.deleteComputer(mockResponse);
+    // expect(component.deleteComputer).toHaveBeenCalledWith(mockResponse);
+    expect(computerServiceSpy.delteComputer).toHaveBeenCalled();
+  });
+  it('should delete computer - error', () => {
+    let mockResponse = {
+      id: 1,
+      brand: 'HP',
+      model: '123D',
+    } as Computer;
+    computerServiceSpy.delteComputer.and.returnValue(
+      throwError(() => {
+        'computer not deleted';
+      })
+    );
+    component.deleteComputer(mockResponse);
+    expect(computerServiceSpy.delteComputer).toHaveBeenCalled();
+  });
+
+  it('should update computer', () => {
+    let mockResponse = {
+      id: 1,
+      brand: 'HP',
+      model: '123D',
+    } as Computer;
+    computerServiceSpy.delteComputer.and.returnValue(of(mockResponse));
+    component.deleteComputer(mockResponse);
+    expect(computerServiceSpy.delteComputer).toHaveBeenCalled();
   });
 });

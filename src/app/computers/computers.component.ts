@@ -37,8 +37,4 @@ export class ComputersComponent {
       },
     });
   }
-
-  updateComputer(item: Computer) {
-    console.log(item);
-  }
 }

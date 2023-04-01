@@ -11,6 +11,9 @@ import { Computer } from 'src/app/model/computer.model';
 })
 export class EditComputerComponent {
   computerId = 0;
+  onError = false;
+  callOnInit = 0;
+  myroute = '';
   formComputerEdit?: FormGroup;
   constructor(
     private route: ActivatedRoute,
@@ -23,20 +26,29 @@ export class EditComputerComponent {
       model: ['', Validators.required],
     });
 
+    this.initData();
+  }
+
+  initData() {
     this.route.params.subscribe({
       next: (params) => {
         this.computerId = params['id'];
         this.loadData();
+        this.callOnInit = 1;
+      },
+      error: (err) => {
+        this.callOnInit = 2;
       },
     });
   }
-
   loadData() {
     this.service.getComputerByid(Number(this.computerId)).subscribe({
       next: (computer: Computer) => {
         this.formComputerEdit?.patchValue(computer);
       },
       error: (err) => {
+        this.onError = true;
+
         alert('Ocurrió un error al cargar la infromación de la caomputadora');
       },
     });
@@ -48,6 +60,7 @@ export class EditComputerComponent {
         this.router.navigate(['computers']);
       },
       error: (err) => {
+        this.onError = true;
         alert('Ocurrió un error al actualizar');
       },
     });
