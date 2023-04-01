@@ -12,7 +12,7 @@ import { Computer } from 'src/app/model/computer.model';
 export class EditComputerComponent {
   computerId = 0;
   onError = false;
-  callOnInit = 0;
+  callOnInit = false;
   myroute = '';
   formComputerEdit?: FormGroup;
   constructor(
@@ -34,10 +34,7 @@ export class EditComputerComponent {
       next: (params) => {
         this.computerId = params['id'];
         this.loadData();
-        this.callOnInit = 1;
-      },
-      error: (err) => {
-        this.callOnInit = 2;
+        this.callOnInit = true;
       },
     });
   }
